@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)  // ✅ Prevents Jenkins from auto-checking out the code
+    }
 
     stages {
     stage('Clean Workspace') {
