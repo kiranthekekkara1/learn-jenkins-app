@@ -2,9 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Cleanup Workspace') {
+          deleteDir()  // Deletes everything in the workspace
+        }
+
         stage('Setup Go') {
             steps {
-                cleanWs()
                 script {
                     def root = tool(name: '1.13', type: 'go')  // ✅ Correct syntax
                     env.PATH = "${root}/bin:${env.PATH}"      // Add Go to PATH
