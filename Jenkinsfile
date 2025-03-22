@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
+
+    options {
+        cleanBeforeCheckout()  // Ensures workspace cleanup only before fetching code
+    }
+
     stages {
-        stage('Cleanup Workspace') {
-          steps{
-            deleteDir()  // Deletes everything in the workspace
-          }
-        }
 
         stage('Setup Go') {
             steps {
@@ -16,6 +16,7 @@ pipeline {
                     sh 'go version'  // Verify Go installation
                     sh 'which go'
                     sh 'echo $WORKSPACE'
+                    sh 'ls -ltr'
                 } // Closing script block ✅
             } // Closing steps block ✅
         } // Closing stage block ✅
