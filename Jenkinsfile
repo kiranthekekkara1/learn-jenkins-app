@@ -8,6 +8,7 @@ pipeline {
                 script {
                     deleteDir()  // ✅ Ensures workspace cleanup before fetching code
                 }
+                 checkout scm 
             }
         }
         stage('Setup Go') {
