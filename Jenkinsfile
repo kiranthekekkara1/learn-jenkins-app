@@ -3,7 +3,9 @@ pipeline {
 
     stages {
         stage('Cleanup Workspace') {
-          deleteDir()  // Deletes everything in the workspace
+          steps{
+            deleteDir()  // Deletes everything in the workspace
+          }
         }
 
         stage('Setup Go') {
