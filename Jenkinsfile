@@ -2,12 +2,14 @@ pipeline {
     agent any
 
 
-    options {
-        cleanBeforeCheckout()  // Ensures workspace cleanup only before fetching code
-    }
-
     stages {
-
+    stage('Clean Workspace') {
+            steps {
+                script {
+                    deleteDir()  // ✅ Ensures workspace cleanup before fetching code
+                }
+            }
+        }
         stage('Setup Go') {
             steps {
                 script {
