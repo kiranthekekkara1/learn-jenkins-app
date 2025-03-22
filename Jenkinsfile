@@ -8,15 +8,11 @@ pipeline {
         stage(' Test and Build ') {
             steps {
                script{
-                def root = tool name: '1.13' type: 'go'
-                withEnv("GOPATH=${GOPATH}/go"){
-                  sh '''
-                    echo $GOPATH
-                    echo $WORKSPACE
-                    go version
-                  '''
-                }
-               }
+                  def root = tool(name: '1.13', type: 'go')  // ✅ Corrected syntax
+                  env.PATH = "${root}/bin:${env.PATH}"      // Add Go to PATH
+                  sh 'go version'  // Verify Go installation
+                  sh "echo $GOPATH"
+                  sh "which go"
             }
         }
     }
