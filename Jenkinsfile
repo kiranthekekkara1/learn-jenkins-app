@@ -105,6 +105,7 @@ pipeline {
             steps{
                 echo "E2E"
                 sh '''
+                    npx playwright install
                     npx playwright test --reporter=html 
                 '''
             }
