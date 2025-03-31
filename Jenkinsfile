@@ -93,6 +93,14 @@ pipeline {
             }
         }
 
+        stage('Manual Approval'){
+            steps{
+                timeout(15){
+                    input message: '', ok: 'Do you wish to deploy to production'
+                }
+            }
+        }
+
         stage('Deploy Prod'){
             agent{
                 docker{
