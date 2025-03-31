@@ -66,7 +66,7 @@ pipeline {
                     }
                     post{
                         always {
-                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'HTMLReport', reportTitles: '', useWrapperFileDirectly: true])
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'PlayRight Test Report', reportTitles: '', useWrapperFileDirectly: true])
                         }
                     }
                 }
@@ -89,6 +89,29 @@ pipeline {
                     node_modules/.bin/netlify deploy --dir=build --prod
 
                 '''
+            }
+        }
+
+        stage('Prod E2E'){
+            agent{
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.51.1-noble'
+                    reuseNode true
+                }
+            }
+            environment{
+                CI_ENVIRONMENT_URL='https://incomparable-starburst-8ff82a.netlify.app'
+            }
+            steps{
+                echo "E2E"
+                sh '''
+                    npx playwright test --reporter=html 
+                '''
+            }
+            post{
+                always {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'PlayRight Prod Report', reportTitles: '', useWrapperFileDirectly: true])
+                }
             }
         }      
     }
